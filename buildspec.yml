@@ -1,0 +1,20 @@
+version: 0.2
+
+env:
+    shell: bash
+
+phases:
+    pre_build:
+      commands:
+        - docker login -u AWS -p $(aws ecr get-login-password --region me-south-1) 845585679097.dkr.ecr.me-south-1.amazonaws.com
+    build:
+      commands:
+        - docker build -t culin-backend .
+    post_build:
+      commands:
+        - docker tag culin-backend:latest 845585679097.dkr.ecr.me-south-1.amazonaws.com/culin-backend:latest 
+        - docker push 845585679097.dkr.ecr.me-south-1.amazonaws.com/culin-backend:latest
+        - printf '[{"name":"culin-backend","imageUri":"845585679097.dkr.ecr.me-south-1.amazonaws.com/culin-backend:latest"}]' > imagedefinitions.json
+
+artifacts:
+  files: imagedefinitions.json

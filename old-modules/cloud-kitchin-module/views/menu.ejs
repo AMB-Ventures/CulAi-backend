@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Menu Table</h2>
+    <table>
+        <tr>
+            <th style="min-width: 70px">kitchenId</th>
+            <th style="min-width: 70px">userId</th>
+            <th style="min-width: 70px">menuId</th>
+            <th style="min-width: 70px">menuName</th>
+            <th style="min-width: 70px">category</th>
+            <th style="min-width: 70px">subcategory</th>
+            <th style="min-width: 70px">description</th>
+            <th style="min-width: 70px">preparationTime</th>
+            <th style="min-width: 70px">ingredients</th>
+            <th style="min-width: 70px">available</th>
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.kitchenId %>
+                </td>
+                <td>
+                    <%= item.userId %>
+                </td>
+                <td>
+                    <%= item.menuId %>
+                </td>
+                <td>
+                    <%= item.menuName%>
+                </td>
+                <td>
+                    <%= item.category%>
+                </td>
+                <td>
+                    <%= item.subcategory%>
+                </td>
+                <td>
+                    <%= item.description%>
+                </td>
+                <td>
+                    <%= item.preparationTime%>
+                </td>
+                <td>
+                    <%= item.ingredients%>
+                </td>
+                <td>
+                    <%= item.available%>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>

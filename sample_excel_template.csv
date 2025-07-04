@@ -1,0 +1,16 @@
+name,brand,category,taxgroup,sku,costingmethod,costprice,preparationtime,barcode,inventoryuom,isparlevelactive,issaleable,sellinguom,sellingprice,minimumparlevel,maximumparlevel,status
+Pizza Margherita,Brand A,Italian,Tax Group 1,PIZ001,fixed,8.50,15,PIZ001123,unit,false,true,unit,15.99,10,50,active
+Chicken Burger,Brand B,Fast Food,Tax Group 2,BUR002,fixed,6.00,10,BUR002456,unit,true,true,unit,12.50,5,25,active
+Caesar Salad,Brand C,Salads,Tax Group 1,SAL003,fromIngredients,4.50,8,SAL003789,unit,false,true,unit,9.99,3,15,active
+Pasta Carbonara,Brand A,Italian,Tax Group 1,PAS004,fixed,7.25,20,PAS004012,unit,true,true,unit,16.50,8,30,active
+Ice Cream Sundae,Brand D,Desserts,Tax Group 3,ICE005,fixed,3.00,5,ICE005345,unit,false,true,unit,8.99,2,10,active
+Fish & Chips,Brand E,Seafood,Tax Group 2,FIS006,fixed,9.00,12,FIS006678,unit,true,true,unit,18.50,6,20,active
+Chicken Wings,Brand B,Appetizers,Tax Group 2,WIN007,fixed,5.50,8,WIN007901,unit,false,true,unit,11.99,4,15,active
+Beef Steak,Brand F,Main Course,Tax Group 1,STK008,fixed,15.00,25,STK008234,unit,true,true,unit,28.99,3,12,active
+Vegetable Soup,Brand C,Soups,Tax Group 1,SOU009,fromIngredients,2.50,10,SOU009567,unit,false,true,unit,6.99,5,20,active
+Chocolate Cake,Brand D,Desserts,Tax Group 3,CAK010,fixed,4.00,0,CAK010890,unit,false,true,unit,9.50,2,8,active
+Grilled Salmon,Brand E,Seafood,Tax Group 2,SAL011,fixed,12.00,18,SAL011123,unit,true,true,unit,24.99,2,10,active
+Mushroom Risotto,Brand A,Italian,Tax Group 1,RIS012,fromIngredients,6.50,22,RIS012456,unit,false,true,unit,14.99,4,12,active
+Chicken Curry,Brand G,Indian,Tax Group 2,CUR013,fixed,7.00,15,CUR013789,unit,true,true,unit,16.50,5,18,active
+French Fries,Brand B,Sides,Tax Group 2,FRI014,fixed,2.00,5,FRI014012,unit,false,true,unit,4.99,10,30,active
+Garlic Bread,Brand A,Sides,Tax Group 1,BRE015,fixed,1.50,3,BRE015345,unit,false,true,unit,3.99,8,25,active 

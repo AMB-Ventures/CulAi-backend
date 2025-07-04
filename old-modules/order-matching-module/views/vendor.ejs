@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>vendor Table</h2>
+    <table>
+        <tr>
+            <th>vendorName</th>
+            <th>vendorLogo</th>
+            <th>licenseKey</th>
+            <th>webHookUrl</th>
+            <th>status</th>
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.vendorName %>
+                </td>
+                <td>
+                    <%= item.vendorLogo%>
+                </td>
+                <td>
+                    <%= item.licenseKey%>
+                </td>
+                <td>
+                    <%= item.webHookUrl%>
+                </td>
+                <td>
+                    <%= item.status%>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>

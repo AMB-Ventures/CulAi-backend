@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 5px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Employee Table</h2>
+    <table>
+        <tr>
+            <th style="min-width: 70px">kitchenId</th>
+            <th style="min-width: 70px">adminId</th>
+            <th style="min-width: 70px">Name</th>
+            <th style="min-width: 70px">emailId</th>
+            <th style="min-width: 70px">mobileNumber</th>
+            <th style="min-width: 70px">role</th>          
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.kitchenId %>
+                </td>
+                <td>
+                    <%= item.adminId %>
+                </td>
+                <td>
+                    <%= item.Name %>
+                </td>
+                <td>
+                    <%= item.emailId%>
+                </td>
+                <td>
+                    <%= item.mobileNumber%>
+                </td>
+                <td>
+                    <%= item.role%>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+  <!--<![endif]-->
+
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Merchant form emailer</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .footer {
+          display: inline-flex;
+      }
+      
+      .footer a {
+          /* display: block; */
+          padding: 0 0.5rem;
+      }
+      
+      .footer a img {
+          padding: 0 0.5rem;
+          /* width: 10px; */
+      }
+      
+      @media screen and (max-width: 576px) {
+          .table {
+              width: 100% !important;
+          }
+          .footer a {
+              display: block;
+              padding: 0.2rem 0;
+          }
+          .footer a img {
+              padding: 0 0.5rem;
+              width: 10px;
+          }
+          .footer {
+              padding: 1rem 0;
+              width: fit-content;
+              margin: auto;
+              text-align: left;
+              display: block;
+          }
+          .footer div {
+              display: flex;
+          }
+      }
+      
+      @media screen and (max-width: 992px) {
+          .table {
+              width: 100% !important;
+          }
+          .footer a {
+              display: block;
+              padding: 0.2rem 0;
+          }
+          .footer a img {
+              padding: 0 0.5rem;
+              width: 10px;
+          }
+          .footer {
+              padding: 1rem 0;
+              width: fit-content;
+              margin: auto;
+              text-align: left;
+              display: block;
+          }
+          .footer div {
+              display: flex;
+          }
+      }
+    </style>
+  </head>
+
+  <body>
+    <table
+      class="table"
+      cellpadding="0"
+      align="center"
+      cellspacing="0"
+      style="
+        font-family: poppins;
+        width: 70%;
+        margin: auto;
+        box-shadow: -1px 8px 14px 0px #d2d2d2e6;
+        height: 960px;
+      "
+    >
+      <thead>
+        <tr style="background: #2a2929">
+          <th
+            style="
+              height: 100px;
+              background-image: url(https://culin-images.s3.me-south-1.amazonaws.com/kitchinimage/kitchenLogo-1655972007442.png);
+              background-repeat: no-repeat;
+              background-position: center;
+            "
+          ></th>
+        </tr>
+        <tr>
+          <th
+            style="
+              height: auto;
+              background-image: url(https://culin-images.s3.me-south-1.amazonaws.com/menuimage/bbq/image-1658750171458.png);
+              background-repeat: no-repeat;
+              background-position: center;
+            "
+          ></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            style="
+              background-image: url(https://culin-images.s3.me-south-1.amazonaws.com/menuimage/bbq/image-1658750171458.png);
+              background-position: center;
+              height: 100%;
+              background-size: cover;
+            "
+          ></td>
+        </tr>
+
+        <tr>
+          <td style="padding: 0 10%">
+            <h2 style="text-align: center; font-weight: 400; margin: 1rem 0">
+              Greetings from Cul.in!
+            </h2>
+            <p style="text-align: center; font-size: 1.2rem">
+              Dear,
+              <span style="font-size: 1.2rem">John Doe</span>
+            </p>
+            <p style="text-align: center; padding: 1rem 0">
+              Thanks for contacting us,
+            </p>
+            <p style="text-align: center">
+              we will get back to you as soon as possible.
+            </p>
+            <p style="text-align: center; padding: 3rem 0">
+              Regards:<br />Cul.in Team
+            </p>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="height: 100px; background: #2a2929;">
+          <td style="text-align: center">
+            <div class="footer" style="padding: 1rem 0;">
+              <div>
+                <a href="" style="text-decoration: none;color: #fff;font-weight: 300;">
+                <img style="padding: 0 0.5rem;" src="https://culin-images.s3.me-south-1.amazonaws.com/email_icon.png" alt="culin Youtube"/><span>support@culinksa.com</span></a>
+                <a href="https://instagram.com/cul.inksa?utm_medium=copy_link" style="text-decoration: none; color: #fff; font-weight: 300;">
+                <img style="padding: 0 0.5rem;" src="https://culin-images.s3.me-south-1.amazonaws.com/insta_icon.png" alt="culin Instagram" /><span>culinksa</span></a>
+              </div>
+
+              <div>
+                <a href="http://culinksa.com/#/termscondition" style="text-decoration: none;color: #fff;font-weight: 300;padding: 0 .5rem;">Terms & Conditions</a> <span style="color: #fff;">|</span>
+                <a href="http://culinksa.com/#/privacypolicy" style="text-decoration: none;color: #fff;font-weight: 300;padding: 0 .5rem;">Privacy Policy</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <script src="" async defer></script>
+  </body>
+</html>

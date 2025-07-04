@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Inquiry Table</h2>
+    <table>
+        <tr>
+            <th>kitchenName</th>
+            <th>kitchenLogo</th>
+            <th>address</th>
+            <th>city</th>
+            <th>state</th>
+            <th>phoneNumber</th>
+            <th>emailId</th>
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.kitchenName %>
+                </td>
+                <td>
+                    <%= item.kitchenLogo%>
+                </td>
+                <td>
+                    <%= item.address%>
+                </td>
+                <td>
+                    <%= item.city%>
+                </td>
+                <td>
+                    <%= item.state%>
+                </td>
+                <td>
+                    <%= item.phoneNumber%>
+                </td>
+                <td>
+                    <%= item.emailId%>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>

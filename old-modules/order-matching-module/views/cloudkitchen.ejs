@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            width: 100%;
+        }
+        
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100px;
+        }
+        
+        td,
+        th {
+            border: 2px solid #dddddd;
+            text-align: left;
+            padding: 10px;
+            width: 200px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Clode kitchen Table</h2>
+    <table>
+        <tr>
+            <th>kitchenName</th>
+            <th>kitchenLogo</th>
+            <th>kitchenDetails</th>
+            <th>kitchenDemographicDetails</th>
+            <th>merchantId</th>
+            <th>kitchenEmail</th>
+            <th>status</th>
+
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.kitchenName %>
+                </td>
+                <td>
+                    <%= item.kitchenLogo%>
+                </td>
+                <td>
+                    <%= item.kitchenDetails%>
+                </td>
+                <td>
+                    <%= item.kitchenDemographicDetails%>
+                </td>
+                <td>
+                    <%= item.merchantId%>
+                </td>
+                <td>
+                    <%= item.kitchenEmail%>
+                </td>
+                <td>
+                    <%= item.status%>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>
