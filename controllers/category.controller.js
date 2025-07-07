@@ -69,7 +69,11 @@ const getBrandCategories = async (req, res, next) => {
 
 const getVendorCategories = async (req, res, next) => {
   try {
-    let result = await category.get({ vendor: req.user.vendor._id });
+    let result = await category.collection
+      .find({
+        vendor: mongoose.Types.ObjectId(req.user.vendor._id),
+      })
+      .toArray();
     if (result) {
       res.status(200).json(result);
     }
