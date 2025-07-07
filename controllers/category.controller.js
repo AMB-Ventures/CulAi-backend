@@ -1,6 +1,7 @@
 var category = require("../doa/menu/category.doa");
 var product = require("../doa/menu/product.doa");
 var inventory = require("../doa/inventory.doa");
+const mongoose = require("mongoose");
 
 const createBrandCategory = async (req, res, next) => {
   try {
@@ -50,14 +51,16 @@ const updateBrandCategory = async (req, res, next) => {
 const getBrandCategories = async (req, res, next) => {
   try {
     const query = {
-      brand: req.params.brandId,
-      vendor: req.user.vendor._id,
-      status: "active",
+      brand: mongoose.Types.ObjectId(req.params.brandId),
+      vendor: mongoose.Types.ObjectId(req.user.vendor._id),
+      status: "active", // add if you want to filter by status
     };
 
-    let result = await category.get(query);
-    if (result) {
-      res.status(200).json(result);
+    // Direct database query to see raw data
+    const rawData = await category.collection.find(query).toArray();
+
+    if (rawData) {
+      res.status(200).json(rawData);
     }
   } catch (e) {
     res.status(500).json({ message: e.message });

@@ -9,14 +9,19 @@ categorySchema.statics = {
   },
   get: async function (query) {
     let result = await this.find(query)
-      .populate("brand").populate({  path: "station", model: "stations" })
+      .select(
+        "+status +name +brand +vendor +station +createdAt +updatedAt +__v"
+      )
+      .populate("brand")
+      .populate({ path: "station", model: "stations" })
       .collation({ locale: "en", strength: 2 })
       .sort({ name: 1 });
     return result;
   },
   getById: async function (id) {
     let result = await this.findById(id)
-      .populate("brand").populate({  path: "station", model: "stations" })
+      .populate("brand")
+      .populate({ path: "station", model: "stations" })
       .sort({ createdAt: 1 });
     return result;
   },

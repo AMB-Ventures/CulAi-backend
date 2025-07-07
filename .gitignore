@@ -5,6 +5,9 @@
 
 package-lock.json
 yarn.lock
+.github
+.vscode
+.postman
 
 # Node artifact files
 node_modules/
