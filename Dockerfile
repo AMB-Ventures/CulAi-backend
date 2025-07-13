@@ -2,7 +2,7 @@ FROM node:20
 
 WORKDIR /build
 
-COPY ["package.json","yarn.lock", "./"]
+COPY package.json ./
 
 # RUN yarn install && mv node_modules ../
 RUN yarn install --production
