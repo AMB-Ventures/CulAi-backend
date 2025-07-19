@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>User Table</h2>
+    <table>
+        <tr>
+            <th>userId</th>
+            <th>kitchenId</th>
+            <th>emailId</th>
+            <th>role</th>
+            <th>name</th>
+            <th>details</th>
+            <th>lisencekey</th>
+            <th>updatedBy</th>
+
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.userId %>
+                </td>
+                <td>
+                    <%= item.kitchenId %>
+                </td>
+                <td>
+                    <%= item.emailId %>
+                </td>
+                <td>
+                    <%= item.role%>
+                </td>
+                <td>
+                    <%= item.name%>
+                </td>
+                <td>
+                    <%= item.details%>
+                </td>
+                <td>
+                    <%= item.lisencekey%>
+                </td>
+                <td>
+                    <%= item.updatedBy%>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>

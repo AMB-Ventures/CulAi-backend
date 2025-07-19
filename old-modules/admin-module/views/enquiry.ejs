@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Enquiry Table</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>emailId</th>
+            <th>mobileNumber</th>
+            <th>webSite</th>
+            <th>brandName</th>
+            <th>cr_maroof</th>
+            <th>designation</th>
+            <th>dishes</th>  
+            <th>city_branches</th>
+            <!-- <th>culin_services</th> -->
+
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.Name %>
+                </td>
+                <td>
+                    <%= item.emailId%>
+                </td>
+                <td>
+                    <%= item.mobileNumber%>
+                </td>
+                <td>
+                    <%= item.webSite%>
+                </td>
+                <td>
+                    <%= item.brandName%>
+                </td>
+                <td>
+                    <%= item.cr_maroof%>
+                </td>
+                <td>
+                    <%= item.designation%>
+                </td>
+                <td>
+                    <%= item.dishes%>
+                </td>     
+                <td>
+                    <%= item.city_branches%>
+                </td>
+                <!-- <td>
+                    <%= item.culin_services%>
+                </td> -->
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>

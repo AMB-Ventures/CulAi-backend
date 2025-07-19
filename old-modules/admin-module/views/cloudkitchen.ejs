@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            width: 100%;
+        }
+        
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100px;
+        }
+        
+        td,
+        th {
+            border: 2px solid #dddddd;
+            text-align: left;
+            padding: 10px;
+            width: 200px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Cloud kitchen Table</h2>
+    <table>
+        <tr>
+            <th>BrandName</th>
+            <th>BrandDetails</th>
+            <th>BrandDemographicDetails</th>
+            <th>BrandId</th>
+            <th>BrandEmail</th>
+            <th>merchantConfig</th>
+            <th>publish</th>
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.kitchenName %>
+                </td>
+                <td>
+                    <%= item.kitchenDetails%>
+                </td>
+                <td>
+                    <%= item.kitchenDemographicDetails%>
+                </td>
+                <td>
+                    <%= item.kitchenId%>
+                </td>
+                <td>
+                    <%= item.kitchenEmail%>
+                </td>
+                <td>
+                    <%= item.merchantConfig%>
+                </td>
+                <td>
+                    <%= item.publish%>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>

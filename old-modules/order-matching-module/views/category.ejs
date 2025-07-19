@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Category Table</h2>
+    <table>
+        <tr>
+            <th>categoryName</th>
+            <th>description</th>
+            <th>status</th>
+        </tr>
+        <% data.forEach((item)=>{ %>
+            <tr>
+                <td>
+                    <%= item.categoryName %>
+                </td>
+                <td>
+                    <%= item.description%>
+                </td>
+                <td>
+                    <%= item.status%>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>
