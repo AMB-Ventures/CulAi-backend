@@ -23,6 +23,7 @@ const io = socketIo(server, {
     origins: [
       "https://console-culinks.vercel.app, http://localhost:3000",
       "https://console.cul-ai.com",
+      "https://cul-ai-frontend.fly.dev",
       "http://localhost:3001",
     ],
     methods: ["GET", "POST"],

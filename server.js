@@ -14,6 +14,7 @@ app.use(
 const corsOptions = {
   origin: [
     "https://console.cul-ai.com",
+    "https://cul-ai-frontend.fly.dev",
     "http://localhost:3000",
     "http://localhost:3001",
     "https://main.d3m30tipkq4qvg.amplifyapp.com",
