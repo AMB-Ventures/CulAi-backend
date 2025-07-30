@@ -81,4 +81,6 @@ router.patch(
   auth.verifyToken
 );
 
+router.patch("/update-chef-status", order.updateChefStatus, auth.verifyToken);
+
 module.exports = router;

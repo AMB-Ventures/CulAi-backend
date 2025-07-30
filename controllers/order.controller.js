@@ -1,10 +1,6 @@
 var mongoose = require("mongoose");
 var order = require("../doa/order.doa");
-var cloudKitchen = require("../doa/vendor.doa");
-var orderdetails = require("../doa/orderDetails.doa");
-var order = require("../doa/order.doa");
 const moment = require("moment");
-// const { v4: uuidv4 } = require("uuid");
 
 const vendorModel = require("../doa/vendor.doa");
 const branchModel = require("../doa/branch.doa");
@@ -274,7 +270,8 @@ const getVendorBranchStationStats = async (req, res, next) => {
     "vendor._id": { $eq: mongoose.Types.ObjectId(req.user.vendor._id) },
     "branch._id": { $eq: mongoose.Types.ObjectId(req.user.branch._id) },
     "orderItems.product.category.station._id": req.user.station._id,
-    status: { $in: ["chef_completed", "completed"] },
+    // status: { $in: ["chef_completed", "completed"] },
+    status: { $in: ["chef_completed"] },
     createdAt: {
       $gte: startDate.toDate(),
       $lt: endDate.toDate(),
@@ -285,7 +282,7 @@ const getVendorBranchStationStats = async (req, res, next) => {
     "vendor._id": { $eq: mongoose.Types.ObjectId(req.user.vendor._id) },
     "branch._id": { $eq: mongoose.Types.ObjectId(req.user.branch._id) },
     "orderItems.product.category.station._id": req.user.station._id,
-    status: { $eq: "chef_cancelled" },
+    status: { $in: ["chef_cancelled", "cancelled", "declined"] },
     createdAt: {
       $gte: startDate.toDate(),
       $lt: endDate.toDate(),
@@ -623,6 +620,100 @@ const rejectVendorBranchOrderItems = async (req, res, next) => {
   }
 };
 
+// Chef : Update Chef Status for Order Items
+const updateChefStatus = async (req, res, next) => {
+  try {
+    if (!req.user.branch || !req.user.branch._id) {
+      return res.status(404).json({ message: "Branch not found" });
+    }
+    if (!req.user.station || !req.user.station._id) {
+      return res.status(404).json({ message: "Station not found" });
+    }
+
+    const { orderId, chefStatus } = req.body;
+
+    if (!orderId || !chefStatus) {
+      return res.status(400).json({
+        message: "orderId and chefStatus are required",
+      });
+    }
+
+    // Validate chefStatus
+    const validStatuses = ["pending", "accepted", "completed", "served"];
+    if (!validStatuses.includes(chefStatus)) {
+      return res.status(400).json({
+        message:
+          "Invalid chefStatus. Must be one of: pending, accepted, completed, served",
+      });
+    }
+
+    const liveOrder = await order.findOne({
+      _id: orderId,
+      "vendor._id": mongoose.Types.ObjectId(req.user.vendor._id),
+      "branch._id": mongoose.Types.ObjectId(req.user.branch._id),
+    });
+
+    if (!liveOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    let stationsToRefresh = new Set();
+    let updatedItems = 0;
+
+    // Update chef status for all items in the chef's station
+    liveOrder.orderItems.forEach((orderItem) => {
+      // Check if the item belongs to the current chef's station
+      if (orderItem.product?.category?.station?._id === req.user.station._id) {
+        orderItem.chefStatus = chefStatus;
+
+        // Update timestamps based on status
+        if (chefStatus === "accepted") {
+          orderItem.chefAcceptedAt = moment.utc().toDate();
+          orderItem.chef = mongoose.Types.ObjectId(req.user._id);
+        } else if (chefStatus === "completed") {
+          orderItem.chefCompletedAt = moment.utc().toDate();
+        }
+
+        stationsToRefresh.add(orderItem.product.category.station._id);
+        updatedItems++;
+      }
+    });
+
+    if (updatedItems === 0) {
+      return res.status(400).json({
+        message: "No valid items found for your station to update",
+      });
+    }
+
+    // Update overall order status based on chef statuses
+    const allItemsCompleted = liveOrder.orderItems.every(
+      (item) => item.chefStatus === "completed" || item.chefStatus === "served"
+    );
+
+    if (allItemsCompleted) {
+      liveOrder.status = "chef_completed";
+    }
+
+    await liveOrder.save();
+
+    // Emit socket events for real-time updates
+    Array.from(stationsToRefresh).forEach((stationId) => {
+      req.app.io.emit(`refetch_station_orders_${stationId}`);
+    });
+
+    req.app.io.emit(`refetch_chefqa_orders_${liveOrder.branch._id.toString()}`);
+
+    res.status(200).json({
+      message: `Chef status updated successfully for ${updatedItems} item(s)`,
+      updatedItems,
+      chefStatus,
+    });
+  } catch (error) {
+    console.error("Error updating chef status:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getVendorOrders,
   getVendorBranchOrders,
@@ -640,4 +731,5 @@ module.exports = {
 
   approveVendorBranchOrder,
   rejectVendorBranchOrderItems,
+  updateChefStatus,
 };

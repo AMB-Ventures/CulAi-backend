@@ -91,6 +91,11 @@ const orderSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "user",
           },
+          chefStatus: {
+            type: String,
+            enum: ["pending", "accepted", "completed", "served"],
+            default: "pending",
+          },
           chefAcceptedAt: { type: Date },
           chefCompletedAt: { type: Date },
           chefTotalPreparationTime: { type: Number },
