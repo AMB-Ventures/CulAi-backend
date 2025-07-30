@@ -103,7 +103,7 @@ const orderSchema = new Schema(
     },
     chefStatus: {
       type: String,
-      enum: ["pending", "accepted", "completed", "served"],
+      enum: ["pending", "accepted", "completed", "served", "cancelled"],
       default: "pending",
     },
     cookingInstructions: { type: String },

@@ -203,6 +203,7 @@ const completeVendorBranchStationChefOrder = async (req, res, next) => {
     ) {
       liveOrder.status = "chef_completed";
     }
+    liveOrder.chefStatus = "completed";
 
     Array.from(stationsToRefresh).forEach((stationId) => {
       req.app.io.emit(`refetch_station_orders_${stationId}`);
@@ -271,7 +272,8 @@ const getVendorBranchStationStats = async (req, res, next) => {
     "branch._id": { $eq: mongoose.Types.ObjectId(req.user.branch._id) },
     "orderItems.product.category.station._id": req.user.station._id,
     // status: { $in: ["chef_completed", "completed"] },
-    status: { $in: ["chef_completed"] },
+    // status: { $in: ["chef_completed"] },
+    chefStatus: { $in: ["completed", "served"] },
     createdAt: {
       $gte: startDate.toDate(),
       $lt: endDate.toDate(),
@@ -282,7 +284,8 @@ const getVendorBranchStationStats = async (req, res, next) => {
     "vendor._id": { $eq: mongoose.Types.ObjectId(req.user.vendor._id) },
     "branch._id": { $eq: mongoose.Types.ObjectId(req.user.branch._id) },
     "orderItems.product.category.station._id": req.user.station._id,
-    status: { $in: ["chef_cancelled", "cancelled", "declined"] },
+    // status: { $in: ["chef_cancelled", "cancelled", "declined"] },
+    chefStatus: { $in: ["cancelled"] },
     createdAt: {
       $gte: startDate.toDate(),
       $lt: endDate.toDate(),
@@ -441,6 +444,7 @@ const cancelVendorBranchOrder = async (req, res, next) => {
       item.status = "cancelled";
       item.cancelledBy = moment.utc().toDate();
     });
+    liveOrder.chefStatus = "cancelled";
     liveOrder.cancelledAt = moment.utc().toDate();
     liveOrder.cancelledBy = req.user._id.toString();
 
@@ -502,6 +506,7 @@ const declineVendorBranchStationOrder = async (req, res, next) => {
       item.status = "declined";
       item.declinedAt = moment.utc().toDate();
     });
+    liveOrder.chefStatus = "cancelled";
     liveOrder.declinedAt = moment.utc().toDate();
     liveOrder.declinedBy = req.user._id.toString();
 
@@ -604,7 +609,7 @@ const rejectVendorBranchOrderItems = async (req, res, next) => {
         rejectedBy: req.user._id,
       });
     });
-
+    liveOrder.chefStatus = "cancelled";
     Array.from(stationsToRefresh).forEach((stationId) => {
       req.app.io.emit(`refetch_station_orders_${stationId}`);
     });
@@ -633,7 +638,7 @@ const updateChefStatus = async (req, res, next) => {
     }
 
     const { orderId, chefStatus } = req.body;
-    console.log(req.body);
+
     if (!orderId || !chefStatus) {
       return res.status(400).json({
         message: "orderId and chefStatus are required",
@@ -654,7 +659,6 @@ const updateChefStatus = async (req, res, next) => {
       "vendor._id": mongoose.Types.ObjectId(req.user.vendor._id),
       "branch._id": mongoose.Types.ObjectId(req.user.branch._id),
     });
-
     if (!liveOrder) {
       return res.status(404).json({ message: "Order not found" });
     }
