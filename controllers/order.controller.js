@@ -399,6 +399,7 @@ const acceptVendorBranchStationOrder = async (req, res, next) => {
       stationsToRefresh.add(item.product.category.station._id);
       if (req.user.station?._id === item.product?.category?.station?._id) {
         item.status = "chef_accepted";
+        item.chefStatus = "accepted";
         item.chef = mongoose.Types.ObjectId(req.user._id);
         item.chefAcceptedAt = moment.utc().toDate();
         item.chefTotalPreparationTime = req.body.totalPreparationTime;
@@ -631,7 +632,7 @@ const updateChefStatus = async (req, res, next) => {
     }
 
     const { orderId, chefStatus } = req.body;
-
+    console.log(req.body);
     if (!orderId || !chefStatus) {
       return res.status(400).json({
         message: "orderId and chefStatus are required",
@@ -657,15 +658,27 @@ const updateChefStatus = async (req, res, next) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
+    // Check if any items in the order belong to the current chef's station
+    const hasStationItems = liveOrder.orderItems.some(
+      (orderItem) =>
+        orderItem.product?.category?.station?._id === req.user.station._id
+    );
+
+    if (!hasStationItems) {
+      return res.status(400).json({
+        message: "No items found for your station in this order",
+      });
+    }
+
+    // Update the order-level chefStatus
+    liveOrder.chefStatus = chefStatus;
+
+    // Update timestamps for items in the chef's station
     let stationsToRefresh = new Set();
     let updatedItems = 0;
 
-    // Update chef status for all items in the chef's station
     liveOrder.orderItems.forEach((orderItem) => {
-      // Check if the item belongs to the current chef's station
       if (orderItem.product?.category?.station?._id === req.user.station._id) {
-        orderItem.chefStatus = chefStatus;
-
         // Update timestamps based on status
         if (chefStatus === "accepted") {
           orderItem.chefAcceptedAt = moment.utc().toDate();
@@ -679,18 +692,8 @@ const updateChefStatus = async (req, res, next) => {
       }
     });
 
-    if (updatedItems === 0) {
-      return res.status(400).json({
-        message: "No valid items found for your station to update",
-      });
-    }
-
-    // Update overall order status based on chef statuses
-    const allItemsCompleted = liveOrder.orderItems.every(
-      (item) => item.chefStatus === "completed" || item.chefStatus === "served"
-    );
-
-    if (allItemsCompleted) {
+    // Update overall order status based on chef status
+    if (chefStatus === "completed" || chefStatus === "served") {
       liveOrder.status = "chef_completed";
     }
 
@@ -704,7 +707,7 @@ const updateChefStatus = async (req, res, next) => {
     req.app.io.emit(`refetch_chefqa_orders_${liveOrder.branch._id.toString()}`);
 
     res.status(200).json({
-      message: `Chef status updated successfully for ${updatedItems} item(s)`,
+      message: `Chef status updated successfully for order`,
       updatedItems,
       chefStatus,
     });
