@@ -399,12 +399,13 @@ const acceptVendorBranchStationOrder = async (req, res, next) => {
       stationsToRefresh.add(item.product.category.station._id);
       if (req.user.station?._id === item.product?.category?.station?._id) {
         item.status = "chef_accepted";
-        item.chefStatus = "accepted";
         item.chef = mongoose.Types.ObjectId(req.user._id);
         item.chefAcceptedAt = moment.utc().toDate();
         item.chefTotalPreparationTime = req.body.totalPreparationTime;
       }
     });
+
+    liveOrder.chefStatus = "accepted";
 
     Array.from(stationsToRefresh).forEach((stationId) => {
       req.app.io.emit(`refetch_station_orders_${stationId}`);
