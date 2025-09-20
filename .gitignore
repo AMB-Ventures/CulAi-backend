@@ -3,8 +3,8 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
-package-lock.json
 yarn.lock
+package-lock.json
 .github
 .vscode
 .postman

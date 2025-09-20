@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
-# Use npm ci and keep prod-only deps
-RUN npm ci --omit=dev
+# Install production dependencies without relying on a lockfile
+RUN npm install --omit=dev
 
 COPY . .
 
