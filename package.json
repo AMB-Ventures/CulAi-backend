@@ -1,12 +1,12 @@
 {
-  "name": "culin-backend",
+  "name": "culai-backend",
   "version": "1.0.0",
-  "description": "CUL.IN Backend Module",
+  "description": "CUL.AI Backend Module",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./bin/www",
-    "dev": "set NODE_ENV=development && nodemon ./bin/www"
+    "start": "node server.js",
+    "dev": "NODE_ENV=development nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "aymanparkar@gmail.com",
   "license": "ISC",
