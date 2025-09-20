@@ -57,7 +57,15 @@ app.options("*", cors(corsOptions));
 
 /* ---------- Database ---------- */
 initDb()
-  .then(() => console.log("✅ Database initialized"))
+  .then((connection) => {
+    if (connection) {
+      console.log("✅ Database initialized");
+    } else {
+      console.warn(
+        "⚠️  Skipping database connection because process.env.DB is not configured."
+      );
+    }
+  })
   .catch((err) => {
     console.error("❌ Database init error:", err?.message || err);
     // Don't crash — app can still answer /healthz with failure state if needed
