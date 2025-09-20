@@ -1,41 +1,44 @@
-var mongoose = require("mongoose");
-var log = require("../logger");
+const mongoose = require("mongoose");
+const log = require("../logger");
+const chalk = require("chalk");
 
-//require chalk module to give colors to console text
-var chalk = require("chalk");
+const connected = chalk.bold.blue;
+const connectionError = chalk.bold.yellow;
+const disconnected = chalk.bold.red;
+const termination = chalk.bold.magenta;
 
-var connected = chalk.bold.blue;
-var error = chalk.bold.yellow;
-var disconnected = chalk.bold.red;
-var termination = chalk.bold.magenta;
+const connectionOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+};
 
-//export this function and imported by server.js
-module.exports = function () {
-  mongoose.connect(process.env.DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
+let listenersRegistered = false;
+
+function registerConnectionListeners() {
+  if (listenersRegistered) {
+    return;
+  }
+
+  const { connection } = mongoose;
+
+  connection.on("connected", () => {
+    log.info(connected("Mongoose default connection is open to ", process.env.DB));
   });
 
-  mongoose.connection.on("connected", function () {
-    log.info(
-      connected("Mongoose default connection is open to ", process.env.DB)
-    );
-  });
-
-  mongoose.connection.on("error", function (err) {
+  connection.on("error", (err) => {
     log.error(
-      error("Mongoose default connection has occured " + err + " error")
+      connectionError("Mongoose default connection has occured " + err + " error")
     );
   });
 
-  mongoose.connection.on("disconnected", function () {
+  connection.on("disconnected", () => {
     log.info(disconnected("Mongoose default connection is disconnected"));
   });
 
-  process.on("SIGINT", function () {
-    mongoose.connection.close(function () {
+  process.on("SIGINT", () => {
+    mongoose.connection.close(() => {
       log.info(
         termination(
           "Mongoose default connection is disconnected due to application termination"
@@ -44,4 +47,29 @@ module.exports = function () {
       process.exit(0);
     });
   });
-};
+
+  listenersRegistered = true;
+}
+
+async function initDb() {
+  if (!process.env.DB) {
+    log.warn(
+      "Mongo connection string (process.env.DB) is not defined. Skipping database initialisation."
+    );
+    return null;
+  }
+
+  registerConnectionListeners();
+
+  try {
+    await mongoose.connect(process.env.DB, connectionOptions);
+    return mongoose.connection;
+  } catch (err) {
+    log.error(
+      connectionError("Mongoose default connection has occured " + err + " error")
+    );
+    throw err;
+  }
+}
+
+module.exports = initDb;
