@@ -17,6 +17,7 @@ primary_region = "maa"
   [[services.ports]]
     port = 443
 
+  # HTTP health check
   [[services.http_checks]]
     interval = "15s"
     timeout = "3s"
