@@ -1,5 +1,7 @@
 // server.js
 const express = require("express");
+const http = require("http");
+const socketIo = require("socket.io");
 require("dotenv").config();
 const cors = require("cors");
 const initDb = require("./config/database");
@@ -150,10 +152,40 @@ app.use((err, req, res, next) => {
   });
 });
 
+/* ---------- Socket.IO ---------- */
+const httpServer = http.createServer(app);
+
+const io = socketIo(httpServer, {
+  path: "/socket",
+  cors: {
+    origins: [
+      "https://console-culinks.vercel.app, http://localhost:3000",
+      "https://console.cul-ai.com",
+      "https://cul-ai-frontend.fly.dev",
+      "https://admin.cul-ai.com",
+      "http://localhost:3001",
+    ],
+    methods: ["GET", "POST"],
+  },
+});
+
+app.io = io;
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
+
 /* ---------- Start Server (Fly.io expects a listener) ---------- */
 const PORT = Number(process.env.PORT) || 8080;
-app.listen(PORT, "0.0.0.0", () => {
+app.set("port", PORT);
+
+httpServer.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server listening on http://0.0.0.0:${PORT}`);
 });
 
 module.exports = app;
+module.exports.httpServer = httpServer;
