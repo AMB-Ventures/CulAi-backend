@@ -21,6 +21,7 @@ app.set("trust proxy", true);
 /* ---------- CORS ---------- */
 const allowList = new Set([
   "https://console.cul-ai.com",
+  "https://console-culinks.vercel.app",
   "https://cul-ai-frontend.fly.dev",
   "https://admin.cul-ai.com",
   "https://pos.cul-ai.com",
