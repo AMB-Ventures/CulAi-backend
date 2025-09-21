@@ -23,6 +23,7 @@ const allowList = new Set([
   "https://console.cul-ai.com",
   "https://cul-ai-frontend.fly.dev",
   "https://admin.cul-ai.com",
+  "https://pos.cul-ai.com",
   "http://localhost:3000",
   "http://localhost:3001",
   "https://main.d3m30tipkq4qvg.amplifyapp.com",
