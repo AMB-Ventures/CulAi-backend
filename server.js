@@ -159,12 +159,16 @@ const httpServer = http.createServer(app);
 const io = socketIo(httpServer, {
   path: "/socket",
   cors: {
-    origins: [
-      "https://console-culinks.vercel.app, http://localhost:3000",
+    origin: [
+      "https://console-culinks.vercel.app",
+      "http://localhost:3000",
       "https://console.cul-ai.com",
       "https://cul-ai-frontend.fly.dev",
       "https://admin.cul-ai.com",
+      "https://pos.cul-ai.com",
       "http://localhost:3001",
+      "https://main.d3m30tipkq4qvg.amplifyapp.com",
+      "http://localhost:8081",
     ],
     methods: ["GET", "POST"],
   },
